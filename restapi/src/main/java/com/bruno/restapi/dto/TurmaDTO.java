@@ -10,4 +10,5 @@ public class TurmaDTO {
     private int periodo;
     private Long professorId;
     private Long disciplinaId;
+    private String codigo;
 }

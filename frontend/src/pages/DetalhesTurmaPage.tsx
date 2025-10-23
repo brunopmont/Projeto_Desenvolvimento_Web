@@ -15,7 +15,7 @@ const DetalhesTurmaPage = () => {
           console.error("Erro ao buscar detalhes da turma:", error)
         );
     }
-  }, [id]); // Executa novamente se o 'id' da URL mudar
+  }, [id]); 
 
   // Exibe uma mensagem de carregamento enquanto os dados não chegam
   if (!turma) {

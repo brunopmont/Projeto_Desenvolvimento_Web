@@ -22,9 +22,13 @@ public class Aluno {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false, unique = true)
+    private String cpf;
+
     // Construtor sem o ID
-    public Aluno(String nome, String email) {
+    public Aluno(String nome, String email, String cpf) {
         this.nome = nome;
         this.email = email;
+        this.cpf = cpf;
     }
 }

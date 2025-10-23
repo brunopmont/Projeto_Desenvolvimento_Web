@@ -39,7 +39,7 @@ public class TurmaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Disciplina não encontrada com o id: " + turmaDTO.getDisciplinaId()));
 
         // 3. Cria a nova entidade Turma com os objetos encontrados
-        Turma turma = new Turma(turmaDTO.getAno(), turmaDTO.getPeriodo(), professor, disciplina);
+        Turma turma = new Turma(turmaDTO.getAno(), turmaDTO.getPeriodo(), professor, disciplina, turmaDTO.getCodigo());
 
         // 4. Salva a nova turma no banco
         return turmaRepository.save(turma);

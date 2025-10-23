@@ -33,6 +33,9 @@ public class Turma {
     @JoinColumn(name = "disciplina_id", nullable = false)
     private Disciplina disciplina;
 
+    @Column(nullable = false, unique = true)
+    private String codigo;
+
     @OneToMany(
             mappedBy = "turma",
             cascade = CascadeType.ALL,
@@ -43,10 +46,11 @@ public class Turma {
     private List<Inscricao> inscricoes = new ArrayList<>();
 
     // Construtor sem o ID
-    public Turma(int ano, int periodo, Professor professor, Disciplina disciplina) {
+    public Turma(int ano, int periodo, Professor professor, Disciplina disciplina, String codigo) {
         this.ano = ano;
         this.periodo = periodo;
         this.professor = professor;
         this.disciplina = disciplina;
+        this.codigo = codigo;
     }
 }

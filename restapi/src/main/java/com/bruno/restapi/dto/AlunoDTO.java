@@ -8,4 +8,5 @@ import lombok.Setter;
 public class AlunoDTO {
     private String nome;
     private String email;
+    private String cpf;
 }

@@ -24,6 +24,12 @@ const NavBar = () => {
             <Link className="nav-link" to="/turmas">
               <i className="bi bi-card-list me-1"></i> Turmas
             </Link>
+            <Link className="nav-link" to="/grupos">
+              <i className="bi bi-people-fill me-1"></i> Gerenciar Grupos
+            </Link>
+            <Link className="nav-link" to="/pesquisa">
+              <i className="bi bi-search me-1"></i> Pesquisa de Turmas
+            </Link>
           </div>
         </div>
       </div>

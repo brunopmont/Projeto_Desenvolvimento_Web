@@ -24,7 +24,7 @@ public class AlunoService {
     }
 
     public Aluno create(AlunoDTO alunoDTO) {
-        Aluno aluno = new Aluno(alunoDTO.getNome(), alunoDTO.getEmail());
+        Aluno aluno = new Aluno(alunoDTO.getNome(), alunoDTO.getEmail(), alunoDTO.getCpf());
         return alunoRepository.save(aluno);
     }
 
@@ -32,6 +32,7 @@ public class AlunoService {
         Aluno aluno = findById(id);
         aluno.setNome(alunoDTO.getNome());
         aluno.setEmail(alunoDTO.getEmail());
+        aluno.setCpf((alunoDTO.getCpf()));
         return alunoRepository.save(aluno);
     }
 

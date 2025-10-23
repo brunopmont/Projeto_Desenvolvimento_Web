@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <>
       <NavBar />
-      <main className="container">
+      <main className="container-fluid">
         <Outlet /> {/* O conteúdo da página atual será renderizado aqui */}
       </main>
     </>

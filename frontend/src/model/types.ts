@@ -2,6 +2,7 @@ export interface Aluno {
   id: number;
   nome: string;
   email: string;
+  cpf: string;
 }
 
 export interface Professor {
@@ -25,8 +26,10 @@ export interface Inscricao {
 export interface Turma {
   id: number;
   ano: number;
+  codigo: string;
   periodo: number;
   professor: Professor;
   disciplina: Disciplina;
   inscricoes: Inscricao[];
 }
+

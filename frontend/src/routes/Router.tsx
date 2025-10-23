@@ -5,6 +5,8 @@ import Layout from "./Layout";
 import ListarAlunosPage from "../pages/ListarAlunosPage";
 import ListarTurmasPage from "../pages/ListarTurmasPage";
 import DetalhesTurmaPage from "../pages/DetalhesTurmaPage";
+import GerenciarGruposPage from "../pages/GerenciarGruposPage";
+import PesquisaTurmasPage from "../pages/PesquisaTurmasPage";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,8 @@ const router = createBrowserRouter([
       { path: "turmas", element: <ListarTurmasPage /> },
       // Esta rota captura um "id" da URL para a página de detalhes
       { path: "turmas/:id", element: <DetalhesTurmaPage /> },
+      { path: "grupos", element: <GerenciarGruposPage /> },
+      { path: "pesquisa", element: <PesquisaTurmasPage /> },
     ],
   },
 ]);

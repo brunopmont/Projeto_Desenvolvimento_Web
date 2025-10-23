@@ -5,12 +5,11 @@ const ListarAlunosPage = () => {
   const [alunos, setAlunos] = useState<Aluno[]>([]);
 
   useEffect(() => {
-    // Busca os dados na sua API backend
     fetch("http://localhost:8080/alunos")
       .then((response) => response.json())
       .then((data) => setAlunos(data))
       .catch((error) => console.error("Erro ao buscar alunos:", error));
-  }, []); // O array vazio [] faz com que o useEffect execute apenas uma vez
+  }, []); 
 
   return (
     <div>
