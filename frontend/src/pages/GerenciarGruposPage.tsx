@@ -1,22 +1,34 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query"; // Importa o useQuery
+import { fetchTurmas, fetchTurmaById } from "../api/api"; // Importa as funções de busca
 import type { Turma, Aluno } from "../model/types";
 
 // Trabalho feito por Raphael Mendes Miranda Fernandes e Bruno Porto Monteiro
 
 const GerenciarGruposPage = () => {
-  const [todasAsTurmas, setTodasAsTurmas] = useState<Turma[]>([]);
-  const [turmaSelecionada, setTurmaSelecionada] = useState<Turma | null>(null);
+  // --- LÓGICA DE BUSCA DE DADOS (Refatorada com React Query) ---
+
+  // 1. Busca TODAS as turmas para o combo box (só roda uma vez)
+  const { data: todasAsTurmas, isLoading: isLoadingTurmas } = useQuery({
+    queryKey: ["turmas"],
+    queryFn: fetchTurmas,
+  });
+
+  // 2. Estado para guardar o ID da turma que o usuário selecionou no combo box
+  const [selectedTurmaId, setSelectedTurmaId] = useState<string>("");
+
+  // 3. Busca os detalhes da turma SELECIONADA.
+  // Esta query é "dependente" e só roda quando 'selectedTurmaId' tiver um valor.
+  const { data: turmaSelecionada, isLoading: isLoadingDetalhes } = useQuery({
+    queryKey: ["turma", selectedTurmaId], // A chave de query inclui o ID
+    queryFn: () => fetchTurmaById(selectedTurmaId),
+    // 'enabled' é a mágica: só executa a query se 'selectedTurmaId' NÃO for vazio.
+    enabled: !!selectedTurmaId,
+  });
+
+  // --- LÓGICA DO LOCALSTORAGE (Permanece a mesma) ---
   const [grupoAlunoIds, setGrupoAlunoIds] = useState<number[]>([]);
 
-  // Busca todas as turmas para preencher o combo box
-  useEffect(() => {
-    fetch("http://localhost:8080/turmas")
-      .then((res) => res.json())
-      .then((data) => setTodasAsTurmas(data))
-      .catch((err) => console.error("Erro ao buscar turmas:", err));
-  }, []);
-
-  // Funções auxiliares para interagir com o LocalStorage
   const getGrupoDoLocalStorage = (codigoTurma: string): number[] => {
     const dados = localStorage.getItem(codigoTurma);
     return dados ? JSON.parse(dados) : [];
@@ -26,28 +38,24 @@ const GerenciarGruposPage = () => {
     localStorage.setItem(codigoTurma, JSON.stringify(idsAlunos));
   };
 
-  // Função chamada quando o usuário seleciona uma turma no combo box
-  const handleTurmaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const turmaId = event.target.value;
-
-    if (!turmaId) {
-      setTurmaSelecionada(null);
+  // 4. Efeito para carregar o localStorage DEPOIS que a 'turmaSelecionada' for buscada
+  useEffect(() => {
+    if (turmaSelecionada) {
+      // Quando a query carregar os dados da turma, carregue o grupo do localStorage
+      setGrupoAlunoIds(getGrupoDoLocalStorage(turmaSelecionada.codigo));
+    } else {
+      // Se nenhuma turma for selecionada, limpe o grupo
       setGrupoAlunoIds([]);
-      return;
     }
+  }, [turmaSelecionada]);
 
-    // Busca os dados completos da turma selecionada (incluindo inscrições)
-    fetch(`http://localhost:8080/turmas/${turmaId}`)
-      .then((res) => res.json())
-      .then((turma: Turma) => {
-        setTurmaSelecionada(turma);
-        // Carrega o grupo de alunos do localStorage para esta turma
-        setGrupoAlunoIds(getGrupoDoLocalStorage(turma.codigo));
-      })
-      .catch((err) => console.error("Erro ao buscar detalhes da turma:", err));
+  // 5. Handler do combo box (agora muito mais simples)
+  // Ele apenas atualiza o ID, e o React Query cuida da busca
+  const handleTurmaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTurmaId(event.target.value);
   };
 
-  // Função chamada ao clicar em "Incluir" ou "Remover"
+  // 6. Handler do botão "Incluir/Remover" (Permanece o mesmo)
   const handleToggleAluno = (alunoId: number) => {
     if (!turmaSelecionada) return;
 
@@ -56,25 +64,23 @@ const GerenciarGruposPage = () => {
     let novoGrupo: number[];
 
     if (grupoAtual.includes(alunoId)) {
-      // Remove o aluno do grupo
       novoGrupo = grupoAtual.filter((id) => id !== alunoId);
     } else {
-      // Adiciona o aluno ao grupo
       novoGrupo = [...grupoAtual, alunoId];
     }
 
-    // Salva o novo grupo no localStorage e atualiza o estado do React
     saveGrupoNoLocalStorage(codigoTurma, novoGrupo);
     setGrupoAlunoIds(novoGrupo);
   };
 
-  // 5. Função para extrair a lista de Alunos de uma Turma
+  // 7. Função auxiliar (Permanece a mesma)
   const getAlunosDaTurma = (): Aluno[] => {
     return turmaSelecionada?.inscricoes.map((inscricao) => inscricao.aluno) || [];
   };
 
   const alunos = getAlunosDaTurma();
 
+  // --- RENDERIZAÇÃO (JSX) ---
   return (
     <div>
       <h3 className="mb-3">Gerenciar Grupos da Turma</h3>
@@ -92,9 +98,11 @@ const GerenciarGruposPage = () => {
             className="form-select"
             onChange={handleTurmaChange}
             defaultValue=""
+            disabled={isLoadingTurmas} // Desabilita o select enquanto as turmas carregam
           >
             <option value="">Selecione uma turma</option>
-            {todasAsTurmas.map((turma) => (
+            {/* Usamos '?' para o caso de 'todasAsTurmas' ser undefined */}
+            {todasAsTurmas?.map((turma) => (
               <option key={turma.id} value={turma.id}>
                 {turma.codigo} - {turma.disciplina.nome}
               </option>
@@ -114,8 +122,18 @@ const GerenciarGruposPage = () => {
           </tr>
         </thead>
         <tbody>
-          {/* Exibe a tabela apenas se uma turma estiver selecionada */}
-          {turmaSelecionada &&
+          {/* Adiciona um feedback de carregamento */}
+          {isLoadingDetalhes && (
+            <tr>
+              <td colSpan={4} className="text-center">
+                Carregando alunos da turma...
+              </td>
+            </tr>
+          )}
+
+          {/* Renderiza os alunos quando não está carregando E uma turma foi selecionada */}
+          {!isLoadingDetalhes &&
+            turmaSelecionada &&
             alunos.map((aluno) => {
               const estaNoGrupo = grupoAlunoIds.includes(aluno.id);
               return (

@@ -1,27 +1,45 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTurmaById } from "../api/api"; // Importa a função de busca
 import type { Turma } from "../model/types";
 
 const DetalhesTurmaPage = () => {
-  const { id } = useParams(); // Pega o 'id' da URL (ex: /turmas/1)
-  const [turma, setTurma] = useState<Turma | null>(null);
+  const { id } = useParams(); // Pega o 'id' da URL
 
-  useEffect(() => {
-    if (id) {
-      fetch(`http://localhost:8080/turmas/${id}`)
-        .then((response) => response.json())
-        .then((data) => setTurma(data))
-        .catch((error) =>
-          console.error("Erro ao buscar detalhes da turma:", error)
-        );
-    }
-  }, [id]); 
+  // Substitui useState e useEffect pelo useQuery
+  const {
+    data: turma,
+    isLoading,
+    isError,
+  } = useQuery<Turma, Error>({
+    // A chave de query é um array que inclui o 'id'.
+    // Se o 'id' mudar, o React Query busca os dados novamente.
+    queryKey: ["turma", id],
+    
+    // A função que será executada para buscar os dados
+    queryFn: () => fetchTurmaById(id!), // O '!' diz ao TypeScript que 'id' não será nulo
+    
+    // 'enabled: !!id' garante que a query só execute se o 'id' existir (não for nulo)
+    enabled: !!id,
+  });
 
-  // Exibe uma mensagem de carregamento enquanto os dados não chegam
-  if (!turma) {
+  // O React Query gerencia o estado de carregamento
+  if (isLoading) {
     return <div>Carregando...</div>;
   }
 
+  // O React Query gerencia o estado de erro
+  if (isError) {
+    return <div>Erro ao carregar detalhes da turma.</div>;
+  }
+
+  // Se a query terminar e não houver dados (ex: ID não existe)
+  if (!turma) {
+    return <div>Turma não encontrada.</div>;
+  }
+
+  // O JSX (HTML) abaixo permanece o mesmo, pois 'turma'
+  // é preenchido pelo React Query
   return (
     <>
       <div className="mb-4">
