@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
+import java.util.List; // <--- Importante
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -24,6 +24,13 @@ public class InscricaoController {
         List<Inscricao> list = inscricaoService.findAll();
         return ResponseEntity.ok(list);
     }
+
+    // --- NOVO MÉTODO ---
+    @GetMapping("/turma/{turmaId}")
+    public ResponseEntity<List<Inscricao>> findByTurma(@PathVariable Long turmaId) {
+        return ResponseEntity.ok(inscricaoService.findByTurma(turmaId));
+    }
+    // -------------------
 
     @PostMapping
     public ResponseEntity<Inscricao> create(@RequestBody InscricaoDTO inscricaoDTO) {

@@ -32,6 +32,15 @@ const NavBar = () => {
             </Link>
           </div>
         </div>
+        <div className="navbar-nav">          
+          <Link className="nav-link" to="/inscricao">
+            <i className="bi bi-pencil-square me-1"></i> Inscrição
+          </Link>
+          
+          <Link className="nav-link" to="/cadastro-aluno">
+            <i className="bi bi-person-plus-fill me-1"></i> Novo Aluno
+          </Link>
+        </div>
       </div>
     </nav>
   );

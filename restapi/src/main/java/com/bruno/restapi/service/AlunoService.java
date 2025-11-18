@@ -40,4 +40,9 @@ public class AlunoService {
         Aluno aluno = findById(id);
         alunoRepository.delete(aluno);
     }
+
+
+    public List<Aluno> findAlunosNaoInscritos(Long turmaId) {
+        return alunoRepository.findAlunosNaoInscritos(turmaId);
+    }
 }

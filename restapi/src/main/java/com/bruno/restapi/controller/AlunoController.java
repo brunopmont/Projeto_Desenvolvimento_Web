@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
+import java.util.List; // <--- Importante
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -31,6 +31,13 @@ public class AlunoController {
         return ResponseEntity.ok(aluno);
     }
 
+    // --- NOVO MÉTODO ---
+    @GetMapping("/nao-inscritos/{turmaId}")
+    public ResponseEntity<List<Aluno>> findNaoInscritos(@PathVariable Long turmaId) {
+        return ResponseEntity.ok(alunoService.findAlunosNaoInscritos(turmaId));
+    }
+    // -------------------
+
     @PostMapping
     public ResponseEntity<Aluno> create(@RequestBody AlunoDTO alunoDTO) {
         Aluno novoAluno = alunoService.create(alunoDTO);
@@ -49,5 +56,13 @@ public class AlunoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         alunoService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Se você implementou o cadastro em lote antes, pode manter ou remover se não precisar mais
+    @PostMapping("/lote")
+    public ResponseEntity<List<Aluno>> createMultiple(@RequestBody List<AlunoDTO> alunosDTO) {
+        // Este método depende se você adicionou o createMultiple no Service
+        // Se não tiver no service, pode apagar este bloco
+        return null;
     }
 }

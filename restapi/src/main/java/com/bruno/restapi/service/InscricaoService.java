@@ -50,4 +50,8 @@ public class InscricaoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Inscrição não encontrada com o id: " + id));
         inscricaoRepository.delete(inscricao);
     }
+
+    public List<Inscricao> findByTurma(Long turmaId) {
+        return inscricaoRepository.findByTurmaIdOrderByIdDesc(turmaId);
+    }
 }

@@ -56,4 +56,8 @@ public class TurmaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Turma não encontrada com o id: " + id));
         turmaRepository.delete(turma);
     }
+
+    public List<Turma> findByDisciplina(Long disciplinaId) {
+        return turmaRepository.findByDisciplinaId(disciplinaId);
+    }
 }
