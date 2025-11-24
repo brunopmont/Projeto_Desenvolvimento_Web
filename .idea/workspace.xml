@@ -6,21 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5e987b15-d5e2-43ea-8113-1388600842ca" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NavBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/routes/Router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/routes/Router.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/AlunoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/AlunoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/InscricaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/InscricaoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/TurmaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/TurmaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/repository/AlunoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/repository/AlunoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/repository/InscricaoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/repository/InscricaoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/repository/TurmaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/repository/TurmaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/service/AlunoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/service/AlunoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/service/InscricaoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/service/InscricaoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/service/TurmaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/service/TurmaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/store/useInscricaoStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/useInscricaoStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

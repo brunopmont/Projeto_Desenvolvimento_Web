@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 
+// Trabalho desenvolvido por Bruno Porto Monteiro e Raphael Mendes Miranda Fernandes
+
 interface InscricaoState {
   selectedDisciplinaId: string;
   selectedTurmaId: string;
