@@ -14,7 +14,7 @@ const useApi = <T>(endpoint: string) => {
     return response.json();
   };
 
-  // Busca um item pelo ID (GET /id) -> NOVO
+  // Busca um item pelo ID (GET /id)
   const recuperarPorId = async (id: string | number): Promise<T> => {
     const response = await fetchWithAuth(`${URL}/${id}`);
     if (!response.ok) throw new Error("Erro ao recuperar o registro");
@@ -37,9 +37,11 @@ const useApi = <T>(endpoint: string) => {
     const response = await fetchWithAuth(`${URL}/${id}`, {
       method: "DELETE",
     });
-    // Se for 403 ou 401, o fetchWithAuth já redirecionou.
-    if (!response.ok && response.status !== 403 && response.status !== 401) {
-        throw new Error("Erro ao remover");
+
+    // CORREÇÃO: Lança erro se não for OK, independente de ser 403 ou 401.
+    // Isso impede que o 'onSuccess' seja chamado no componente.
+    if (!response.ok) {
+        throw new Error("Erro ao remover registro");
     }
   };
 

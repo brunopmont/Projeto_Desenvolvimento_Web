@@ -23,12 +23,10 @@ public class Aluno {
     private String nome;
 
     @NotBlank(message = "O email deve ser informado.")
-    @Email(message = "Email inválido.")
     @Column(nullable = false, unique = true)
     private String email;
 
     @NotBlank(message = "O CPF deve ser informado.")
-    @CPF(message = "CPF inválido")
     @Column(unique = true)
     private String cpf;
 

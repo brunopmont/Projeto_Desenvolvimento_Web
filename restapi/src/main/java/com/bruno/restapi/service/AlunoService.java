@@ -3,6 +3,7 @@ package com.bruno.restapi.service;
 import com.bruno.restapi.dto.AlunoDTO;
 import com.bruno.restapi.model.Aluno;
 import com.bruno.restapi.repository.AlunoRepository;
+import com.bruno.restapi.repository.InscricaoRepository; // <--- Importante
 import com.bruno.restapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class AlunoService {
 
     @Autowired
     private AlunoRepository alunoRepository;
+
+    @Autowired
+    private InscricaoRepository inscricaoRepository; // <--- Injeção necessária
 
     public List<Aluno> findAll() {
         return alunoRepository.findAll();
@@ -38,9 +42,16 @@ public class AlunoService {
 
     public void delete(Long id) {
         Aluno aluno = findById(id);
+
+        // --- Validação: Impede exclusão se o aluno tiver inscrições ---
+        if (!inscricaoRepository.findByAluno(aluno).isEmpty()) {
+            // Esta mensagem será enviada ao front-end se o seu ExceptionHandler tratar RuntimeException
+            throw new RuntimeException("Não é possível remover o aluno pois ele possui inscrições ativas.");
+        }
+        // -------------------------------------------------------------
+
         alunoRepository.delete(aluno);
     }
-
 
     public List<Aluno> findAlunosNaoInscritos(Long turmaId) {
         return alunoRepository.findAlunosNaoInscritos(turmaId);

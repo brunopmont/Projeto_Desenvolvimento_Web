@@ -1,5 +1,6 @@
 package com.bruno.restapi.repository;
 
+import com.bruno.restapi.model.Aluno;
 import com.bruno.restapi.model.Inscricao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,4 +9,5 @@ import java.util.List;
 @Repository
 public interface InscricaoRepository extends JpaRepository<Inscricao, Long> {
     List<Inscricao> findByTurmaIdOrderByIdDesc(Long turmaId);
+    List<Inscricao> findByAluno(Aluno aluno);
 }

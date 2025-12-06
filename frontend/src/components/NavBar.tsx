@@ -3,20 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import useTokenStore from "../store/TokenStore";
 
 const NavBar = () => {
-  // 1. Recuperamos o estado do token e a função de logout da Store
   const tokenResponse = useTokenStore((state) => state.tokenResponse);
   const logout = useTokenStore((state) => state.logout);
   const navigate = useNavigate();
 
-  // Função para deslogar e voltar para a home
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
-  // Verifica se o usuário é ADMIN
   const isAdmin = tokenResponse.role === "ADMIN";
-  // Verifica se está logado (se tem token)
   const isLogged = !!tokenResponse.token;
 
   return (
@@ -41,6 +37,15 @@ const NavBar = () => {
             <Link className="nav-link" to="/alunos">
               <i className="bi bi-person-lines-fill me-1"></i> Alunos
             </Link>
+
+            {/* --- NOVO: Botão para Cadastrar Aluno (Só ADMIN) --- */}
+            {isAdmin && (
+              <Link className="nav-link" to="/cadastro-aluno">
+                <i className="bi bi-person-plus-fill me-1"></i> Novo Aluno
+              </Link>
+            )}
+            {/* --------------------------------------------------- */}
+
             <Link className="nav-link" to="/turmas">
               <i className="bi bi-card-list me-1"></i> Turmas
             </Link>
@@ -54,7 +59,7 @@ const NavBar = () => {
               <i className="bi bi-pencil-square me-1"></i> Inscrição
             </Link>
             
-            {/* Menu exclusivo para ADMIN: Criar novo usuário ADMIN/USER */}
+            {/* Menu exclusivo para ADMIN: Criar novo usuário de sistema */}
             {isAdmin && (
               <Link className="nav-link text-warning" to="/cadastro-usuario">
                 <i className="bi bi-shield-lock-fill me-1"></i> Criar Usuário
@@ -62,7 +67,7 @@ const NavBar = () => {
             )}
           </div>
 
-          {/* Lado Direito: Login / Logout / Nome do Usuário */}
+          {/* Lado Direito: Login / Logout */}
           <div className="navbar-nav">
             {isLogged ? (
               <>
