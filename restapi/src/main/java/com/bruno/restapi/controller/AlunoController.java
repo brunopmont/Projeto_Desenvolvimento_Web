@@ -3,6 +3,7 @@ package com.bruno.restapi.controller;
 import com.bruno.restapi.dto.AlunoDTO;
 import com.bruno.restapi.model.Aluno;
 import com.bruno.restapi.service.AlunoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class AlunoController {
     // -------------------
 
     @PostMapping
-    public ResponseEntity<Aluno> create(@RequestBody AlunoDTO alunoDTO) {
+    public ResponseEntity<Aluno> create(@Valid @RequestBody AlunoDTO alunoDTO) {
         Aluno novoAluno = alunoService.create(alunoDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(novoAluno.getId()).toUri();

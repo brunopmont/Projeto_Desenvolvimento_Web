@@ -9,6 +9,8 @@ import GerenciarGruposPage from "../pages/GerenciarGruposPage";
 import PesquisaTurmasPage from "../pages/PesquisaTurmasPage";
 import InscricaoDeAlunoPage from "../pages/InscricaoDeAlunoPage";
 import CadastroDeAlunosPage from "../pages/CadastroDeAlunosPage";
+import LoginPage from "../pages/LoginPage";
+import CadastroDeUsuarioPage from "../pages/CadastroDeUsuarioPage";
 
 const router = createBrowserRouter([
   {
@@ -20,9 +22,10 @@ const router = createBrowserRouter([
       { path: "turmas/:id", element: <DetalhesTurmaPage /> },
       { path: "grupos", element: <GerenciarGruposPage /> },
       { path: "pesquisa", element: <PesquisaTurmasPage /> },
-      // --- NOVAS ROTAS ---
       { path: "inscricao", element: <InscricaoDeAlunoPage /> },
       { path: "cadastro-aluno", element: <CadastroDeAlunosPage /> },
+      { path: "login", element: <LoginPage /> },
+      { path: "cadastro-usuario", element: <CadastroDeUsuarioPage /> },
     ],
   },
 ]);

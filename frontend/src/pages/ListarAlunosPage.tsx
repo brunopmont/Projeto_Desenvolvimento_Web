@@ -1,29 +1,32 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchAlunos } from "../api/api"; // Importa a função de busca
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import useApi from "../hooks/useApi";
 import type { Aluno } from "../model/types";
 
 const ListarAlunosPage = () => {
-  // O React Query substitui o useState e o useEffect
-  const {
-    data: alunos, // 'data' é renomeado para 'alunos'
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["alunos"], // Uma chave única para identificar esta busca
-    queryFn: fetchAlunos, // A função que realmente busca os dados
+  // 1. Usa o hook genérico especificando o tipo Aluno e o endpoint
+  const { recuperar, remover } = useApi<Aluno>("/alunos");
+  const queryClient = useQueryClient();
+
+  // 2. React Query para buscar (GET)
+  const { data: alunos, isLoading, isError } = useQuery({
+    queryKey: ["alunos"],
+    queryFn: recuperar,
   });
 
-  // React Query gerencia o estado de carregamento
-  if (isLoading) {
-    return <div>Carregando...</div>;
-  }
+  // 3. React Query Mutation para remover (DELETE)
+  const mutationRemover = useMutation({
+    mutationFn: (id: number) => remover(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["alunos"] });
+      alert("Aluno removido!");
+    },
+    // O erro 403 vai redirecionar antes de chegar aqui, mas é bom ter
+    onError: (error) => console.log("Erro na mutação:", error),
+  });
 
-  // React Query gerencia o estado de erro
-  if (isError) {
-    return <div>Erro ao carregar alunos.</div>;
-  }
+  if (isLoading) return <div>Carregando...</div>;
+  if (isError) return <div>Erro ao carregar (Verifique se está logado).</div>;
 
-  // O JSX (HTML) abaixo é praticamente o mesmo
   return (
     <div>
       <h3>Lista de Alunos</h3>
@@ -33,15 +36,28 @@ const ListarAlunosPage = () => {
             <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
+            <th>Ação</th>
           </tr>
         </thead>
         <tbody>
-          {/* Adicionamos '?' para o caso de 'alunos' ainda não existir */}
           {alunos?.map((aluno) => (
             <tr key={aluno.id}>
               <td>{aluno.id}</td>
               <td>{aluno.nome}</td>
               <td>{aluno.email}</td>
+              <td>
+                {/* Botão visível para TODOS, mas falha para USER */}
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => {
+                    if (confirm("Tem certeza?")) {
+                      mutationRemover.mutate(aluno.id);
+                    }
+                  }}
+                >
+                  Remover
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
