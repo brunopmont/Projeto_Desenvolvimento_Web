@@ -3,23 +3,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate, Link } from "react-router-dom";
+import useApi from "../hooks/useApi"; // <--- Importa o hook
 
-// URL do seu backend
-const API_URL = "http://localhost:8080";
-
-// 1. Esquema de Validação com Zod
+// Esquema de Validação
 const schema = z.object({
   nome: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
   username: z.string().min(3, "O usuário deve ter pelo menos 3 caracteres"),
   password: z.string().min(4, "A senha deve ter pelo menos 4 caracteres"),
+  role: z.string().optional(), // Opcional no form, adicionado no submit
 });
 
 type CadastroUsuarioFormData = z.infer<typeof schema>;
 
 const CadastroDeUsuarioPage = () => {
   const navigate = useNavigate();
+  
+  // Instancia o hook apontando para /usuarios
+  const { cadastrar } = useApi<CadastroUsuarioFormData>("/usuarios");
 
-  // 2. Configuração do Formulário
   const {
     register,
     handleSubmit,
@@ -28,30 +29,18 @@ const CadastroDeUsuarioPage = () => {
     resolver: zodResolver(schema),
   });
 
-  // 3. Mutação para enviar os dados ao Backend
   const mutation = useMutation({
-    mutationFn: async (data: CadastroUsuarioFormData) => {
-      // O backend espera um objeto com { nome, username, password, role: 'USER' }
-      // Mas o controller /usuarios geralmente define 'USER' por padrão se não enviado,
-      // ou podemos enviar explicitamente aqui se seu DTO exigir.
-      // Vou enviar apenas os dados do form, assumindo que seu backend trata a Role.
-      const response = await fetch(`${API_URL}/usuarios`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, role: "USER" }), // Garante que é USER
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao criar usuário. Tente outro login.");
-      }
-      return response.json();
+    mutationFn: (data: CadastroUsuarioFormData) => {
+      // Garante que a role seja USER e usa a função do hook
+      const dadosParaEnviar = { ...data, role: "USER" };
+      return cadastrar(dadosParaEnviar);
     },
     onSuccess: () => {
       alert("Conta criada com sucesso! Faça login para continuar.");
-      navigate("/login"); // Redireciona para a tela de login
+      navigate("/login");
     },
     onError: (error) => {
-      alert(error.message);
+      alert("Erro ao criar usuário: " + error);
     },
   });
 
@@ -65,7 +54,6 @@ const CadastroDeUsuarioPage = () => {
         <h3 className="text-center mb-4">Criar Nova Conta</h3>
         
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Campo Nome */}
           <div className="mb-3">
             <label className="form-label">Nome Completo</label>
             <input
@@ -76,7 +64,6 @@ const CadastroDeUsuarioPage = () => {
             {errors.nome && <div className="invalid-feedback">{errors.nome.message}</div>}
           </div>
 
-          {/* Campo Usuário (Login) */}
           <div className="mb-3">
             <label className="form-label">Nome de Usuário (Login)</label>
             <input
@@ -87,7 +74,6 @@ const CadastroDeUsuarioPage = () => {
             {errors.username && <div className="invalid-feedback">{errors.username.message}</div>}
           </div>
 
-          {/* Campo Senha */}
           <div className="mb-3">
             <label className="form-label">Senha</label>
             <input
@@ -98,7 +84,6 @@ const CadastroDeUsuarioPage = () => {
             {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
           </div>
 
-          {/* Botão de Enviar */}
           <button
             type="submit"
             className="btn btn-success w-100 mb-3"

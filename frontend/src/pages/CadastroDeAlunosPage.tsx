@@ -1,24 +1,27 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import useApi from "../hooks/useApi"; // Importa useApi
 
-const API_URL = "http://localhost:8080";
-
-// Esquema de validação com Zod
+// O esquema Zod permanece igual
 const alunoSchema = z.object({
   nome: z.string().min(3, "O nome deve ter no mínimo 3 caracteres"),
   email: z.string().email("Formato de email inválido"),
   cpf: z.string().length(11, "O CPF deve ter 11 dígitos"),
 });
 
-// Tipo inferido do Zod
 type AlunoFormData = z.infer<typeof alunoSchema>;
 
 const CadastroDeAlunosPage = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   
+  // 1. Usa o hook apontando para /alunos
+  // Nota: AlunoFormData é compatível com o tipo Aluno esperado, ou você pode usar 'any' se preferir simplificar aqui
+  const { cadastrar } = useApi<AlunoFormData>("/alunos"); 
+
   const {
     register,
     handleSubmit,
@@ -28,20 +31,17 @@ const CadastroDeAlunosPage = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: AlunoFormData) => {
-      const res = await fetch(`${API_URL}/alunos`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Erro ao cadastrar");
-      return res.json();
-    },
-    onSuccess: (data) => {
+    mutationFn: (data: AlunoFormData) => cadastrar(data), // 2. Usa a função cadastrar
+    onSuccess: () => {
       alert("Aluno cadastrado!");
+      // Invalida o cache para que a lista de alunos seja atualizada
+      queryClient.invalidateQueries({ queryKey: ["alunos"] });
       navigate(`/alunos`); 
     },
-    onError: () => alert("Erro ao cadastrar aluno."),
+    onError: (error) => {
+      console.error(error);
+      alert("Erro ao cadastrar aluno.");
+    },
   });
 
   const onSubmit = (data: AlunoFormData) => {
@@ -70,7 +70,7 @@ const CadastroDeAlunosPage = () => {
           {errors.cpf && <span className="text-danger">{errors.cpf.message}</span>}
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" disabled={mutation.isPending}>
           {mutation.isPending ? "Salvando..." : "Salvar"}
         </button>
       </form>

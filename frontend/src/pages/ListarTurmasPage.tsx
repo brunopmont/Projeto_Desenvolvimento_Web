@@ -1,30 +1,24 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchTurmas } from "../api/api"; // Importa a função de busca
+import useApi from "../hooks/useApi"; // Importa o hook
 import type { Turma } from "../model/types";
 
 const ListarTurmasPage = () => {
-  // Substitui useState e useEffect pelo useQuery
+  // Inicializa o hook apontando para "/turmas"
+  const { recuperar } = useApi<Turma>("/turmas");
+
   const {
-    data: turmas, // 'data' é renomeado para 'turmas'
+    data: turmas,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["turmas"], // Chave única para esta busca
-    queryFn: fetchTurmas, // Função que busca os dados
+    queryKey: ["turmas"],
+    queryFn: recuperar, // Usa a função do hook
   });
 
-  // Gerencia o estado de carregamento
-  if (isLoading) {
-    return <div>Carregando...</div>;
-  }
+  if (isLoading) return <div>Carregando...</div>;
+  if (isError) return <div>Erro ao carregar turmas (Verifique se está logado).</div>;
 
-  // Gerencia o estado de erro
-  if (isError) {
-    return <div>Erro ao carregar turmas.</div>;
-  }
-
-  // O JSX (HTML) permanece o mesmo
   return (
     <div>
       <h3>Lista de Turmas</h3>
@@ -37,16 +31,12 @@ const ListarTurmasPage = () => {
           </tr>
         </thead>
         <tbody>
-          {/* Adicionamos '?' para o caso de 'turmas' ser undefined */}
           {turmas?.map((turma) => (
             <tr key={turma.id}>
               <td>
-                {/* Link para a página de detalhes da turma, passando o ID na URL */}
                 <Link to={`/turmas/${turma.id}`}>{turma.disciplina.nome}</Link>
               </td>
-              <td>
-                {turma.ano}/{turma.periodo}
-              </td>
+              <td>{turma.ano}/{turma.periodo}</td>
               <td>{turma.professor.nome}</td>
             </tr>
           ))}

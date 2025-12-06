@@ -7,12 +7,21 @@ const useApi = <T>(endpoint: string) => {
   const { fetchWithAuth } = useFetchWithAuth();
   const URL = `${URL_BASE}${endpoint}`;
 
+  // Busca lista (GET /)
   const recuperar = async (): Promise<T[]> => {
     const response = await fetchWithAuth(URL);
     if (!response.ok) throw new Error("Erro ao recuperar dados");
     return response.json();
   };
 
+  // Busca um item pelo ID (GET /id) -> NOVO
+  const recuperarPorId = async (id: string | number): Promise<T> => {
+    const response = await fetchWithAuth(`${URL}/${id}`);
+    if (!response.ok) throw new Error("Erro ao recuperar o registro");
+    return response.json();
+  };
+
+  // Cria um novo registro (POST /)
   const cadastrar = async (dado: T): Promise<T> => {
     const response = await fetchWithAuth(URL, {
       method: "POST",
@@ -23,18 +32,18 @@ const useApi = <T>(endpoint: string) => {
     return response.json();
   };
 
-  const remover = async (id: number): Promise<void> => {
+  // Remove um registro (DELETE /id)
+  const remover = async (id: number | string): Promise<void> => {
     const response = await fetchWithAuth(`${URL}/${id}`, {
       method: "DELETE",
     });
     // Se for 403 ou 401, o fetchWithAuth já redirecionou.
-    // Se for outro erro (500), lançamos aqui.
     if (!response.ok && response.status !== 403 && response.status !== 401) {
         throw new Error("Erro ao remover");
     }
   };
 
-  return { recuperar, cadastrar, remover };
+  return { recuperar, recuperarPorId, cadastrar, remover };
 };
 
 export default useApi;

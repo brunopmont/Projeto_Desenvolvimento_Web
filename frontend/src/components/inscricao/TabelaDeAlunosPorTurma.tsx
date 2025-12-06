@@ -1,16 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchInscricoesPorTurma } from "../../api/api";
+import useApi from "../../hooks/useApi";
 import { useInscricaoStore } from "../../store/useInscricaoStore";
 import Paginacao from "./Paginacao";
+import type { Inscricao } from "../../model/types";
 
 const ITENS_POR_PAGINA = 5;
 
 const TabelaDeAlunosPorTurma = () => {
   const { selectedTurmaId, termoPesquisa, paginaAtual } = useInscricaoStore();
 
+  // Endpoint: /inscricoes/turma/{turmaId}
+  const { recuperar } = useApi<Inscricao>(`/inscricoes/turma/${selectedTurmaId}`);
+
   const { data: inscricoes, isLoading } = useQuery({
     queryKey: ["inscricoes-turma", selectedTurmaId],
-    queryFn: () => fetchInscricoesPorTurma(selectedTurmaId),
+    queryFn: recuperar,
     enabled: !!selectedTurmaId,
   });
 
@@ -31,7 +35,7 @@ const TabelaDeAlunosPorTurma = () => {
   return (
     <div className="border p-3">
       <div className="d-flex justify-content-between mb-3">
-        <div><strong>Ano:</strong> 2025</div> {/* Idealmente viria da turma selecionada */}
+        <div><strong>Ano:</strong> 2025</div> 
         <div><strong>Período:</strong> 2</div>
       </div>
       

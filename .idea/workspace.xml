@@ -6,8 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="5e987b15-d5e2-43ea-8113-1388600842ca" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/auth/Controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/auth/Controller/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/auth/Controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/auth/Controller/UsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/AlunoComboBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/AlunoComboBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/DisciplinaComboBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/DisciplinaComboBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/InscricaoForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/InscricaoForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/TabelaDeAlunosPorTurma.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/TabelaDeAlunosPorTurma.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/TurmaComboBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/TurmaComboBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/hooks/useApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/hooks/useApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/CadastroDeAlunosPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/CadastroDeAlunosPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/CadastroDeUsuarioPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/CadastroDeUsuarioPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/DetalhesTurmaPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/DetalhesTurmaPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/GerenciarGruposPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/GerenciarGruposPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/InscricaoDeAlunoPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/InscricaoDeAlunoPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/ListarTurmasPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/ListarTurmasPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/PesquisaTurmasPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/PesquisaTurmasPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/auth/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/config/SetupDataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/auth/config/SetupDataLoader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

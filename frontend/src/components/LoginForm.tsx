@@ -5,12 +5,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate, Link } from "react-router-dom";
 import useTokenStore from "../store/TokenStore";
 import useLoginStore from "../store/LoginStore";
+import useApi from "../hooks/useApi"; // <--- Importa o hook
 import { useEffect } from "react";
 
-// URL do seu backend
-const API_URL = "http://localhost:8080";
-
-// Validação do formulário com Zod
+// Validação do formulário
 const schema = z.object({
   username: z.string().min(1, "O nome de usuário é obrigatório"),
   password: z.string().min(1, "A senha é obrigatória"),
@@ -21,9 +19,11 @@ type LoginFormData = z.infer<typeof schema>;
 const LoginForm = () => {
   const navigate = useNavigate();
   const setTokenResponse = useTokenStore((state) => state.setTokenResponse);
-  
-  // Pega a mensagem de erro (se houver) do LoginStore
   const { mensagem, setMensagem } = useLoginStore();
+
+  // Instancia o hook para a rota de login
+  // Usamos 'any' aqui porque o retorno (Token) é diferente da entrada (LoginFormData)
+  const { cadastrar } = useApi<any>("/autenticacao/login");
 
   const {
     register,
@@ -33,33 +33,25 @@ const LoginForm = () => {
     resolver: zodResolver(schema),
   });
 
-  // Limpa a mensagem de erro ao desmontar o componente ou ao iniciar
   useEffect(() => {
-    // Opcional: limpar mensagem após alguns segundos ou manter até o usuário tentar logar
+    // Pode limpar mensagem ao montar, se desejar
   }, []);
 
   const mutation = useMutation({
-    mutationFn: async (data: LoginFormData) => {
-      const response = await fetch(`${API_URL}/autenticacao/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        // Tenta ler a mensagem de erro do backend, se houver
-        throw new Error("Usuário ou senha inválidos");
-      }
-      return response.json();
+    mutationFn: (data: LoginFormData) => {
+      // Usa o método cadastrar do useApi (que faz um POST)
+      return cadastrar(data);
     },
     onSuccess: (data) => {
-      // Salva o token e redireciona para a Home
+      // Salva o token e redireciona
       setTokenResponse(data);
-      setMensagem(""); // Limpa erros anteriores
+      setMensagem(""); 
       navigate("/");
     },
     onError: (error) => {
-      setMensagem(error.message);
+      // O useApi lança erro se não for 200 OK
+      setMensagem("Usuário ou senha inválidos.");
+      console.error(error);
     },
   });
 
@@ -71,7 +63,6 @@ const LoginForm = () => {
     <div className="card shadow-sm p-4" style={{ maxWidth: "400px", width: "100%" }}>
       <h3 className="text-center mb-4">Login</h3>
 
-      {/* Exibe mensagem de erro (ex: "Necessário estar autenticado") */}
       {mensagem && (
         <div className="alert alert-danger text-center" role="alert">
           {mensagem}
@@ -114,7 +105,6 @@ const LoginForm = () => {
 
       <div className="text-center">
         <span className="text-muted">Não tem conta? </span>
-        {/* Link para a página de cadastro público de usuário */}
         <Link to="/cadastro-usuario" className="text-decoration-none">
           Cadastre-se
         </Link>

@@ -1,19 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchTurmasPorDisciplina } from "../../api/api";
+import useApi from "../../hooks/useApi";
 import { useInscricaoStore } from "../../store/useInscricaoStore";
+import type { Turma } from "../../model/types";
 
 const TurmaComboBox = () => {
   const { selectedDisciplinaId, selectedTurmaId, setSelectedTurmaId, resetAluno } = useInscricaoStore();
 
+  // Endpoint dinâmico: /turmas/disciplina/{id}
+  const { recuperar } = useApi<Turma>(`/turmas/disciplina/${selectedDisciplinaId}`);
+
   const { data: turmas } = useQuery({
     queryKey: ["turmas", selectedDisciplinaId],
-    queryFn: () => fetchTurmasPorDisciplina(selectedDisciplinaId),
-    enabled: !!selectedDisciplinaId, // Só busca se tiver disciplina selecionada
+    queryFn: recuperar,
+    enabled: !!selectedDisciplinaId, 
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTurmaId(e.target.value);
-    resetAluno(); // Limpa seleção de aluno ao trocar turma
+    resetAluno(); 
   };
 
   return (

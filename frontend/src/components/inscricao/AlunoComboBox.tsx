@@ -1,13 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchAlunosNaoInscritos } from "../../api/api";
+import useApi from "../../hooks/useApi";
 import { useInscricaoStore } from "../../store/useInscricaoStore";
+import type { Aluno } from "../../model/types";
 
 const AlunoComboBox = () => {
   const { selectedTurmaId, selectedAlunoId, setSelectedAlunoId } = useInscricaoStore();
 
+  // Endpoint: /alunos/nao-inscritos/{turmaId}
+  const { recuperar } = useApi<Aluno>(`/alunos/nao-inscritos/${selectedTurmaId}`);
+
   const { data: alunos } = useQuery({
     queryKey: ["alunos-nao-inscritos", selectedTurmaId],
-    queryFn: () => fetchAlunosNaoInscritos(selectedTurmaId),
+    queryFn: recuperar,
     enabled: !!selectedTurmaId,
   });
 

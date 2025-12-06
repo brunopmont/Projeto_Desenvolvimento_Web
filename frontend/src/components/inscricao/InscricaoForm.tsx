@@ -3,14 +3,23 @@ import DisciplinaComboBox from "./DisciplinaComboBox";
 import TurmaComboBox from "./TurmaComboBox";
 import AlunoComboBox from "./AlunoComboBox";
 import { useInscricaoStore } from "../../store/useInscricaoStore";
-import { cadastrarInscricao } from "../../api/api";
+import useApi from "../../hooks/useApi"; // Importa hook
+
+// Define o formato dos dados enviados para o backend
+interface InscricaoDTO {
+  alunoId: number;
+  turmaId: number;
+}
 
 const InscricaoForm = () => {
   const { selectedTurmaId, selectedAlunoId, setSelectedAlunoId } = useInscricaoStore();
   const queryClient = useQueryClient();
 
+  // Endpoint para criar inscrição: POST /inscricoes
+  const { cadastrar } = useApi<InscricaoDTO>("/inscricoes");
+
   const mutation = useMutation({
-    mutationFn: cadastrarInscricao,
+    mutationFn: (dados: InscricaoDTO) => cadastrar(dados), // Usa o cadastrar do hook
     onSuccess: () => {
       // Atualiza as listas após a inscrição
       queryClient.invalidateQueries({ queryKey: ["alunos-nao-inscritos"] });
