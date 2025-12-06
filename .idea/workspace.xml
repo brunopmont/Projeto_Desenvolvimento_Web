@@ -5,25 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e987b15-d5e2-43ea-8113-1388600842ca" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/restapi/auth/Controller/AuthenticationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/Controller/UsuarioController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/Filter/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/config/SetupDataLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/model/Usuario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/repository/UsuarioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/service/JwtService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/service/UsuarioDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/util/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/util/TokenResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restapi/auth/util/UsuarioLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NavBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/ListarAlunosPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/ListarAlunosPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/routes/Router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/routes/Router.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/auth/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/AlunoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/AlunoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/src/main/resources/META-INF/persistence.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
