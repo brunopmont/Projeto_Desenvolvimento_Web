@@ -5,23 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e987b15-d5e2-43ea-8113-1388600842ca" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/dto/TokenResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/dto/UsuarioLogin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/filter/JwtAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/service/UsuarioService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/LoginForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/AlunoComboBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/AlunoComboBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/DisciplinaComboBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/DisciplinaComboBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/InscricaoForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/InscricaoForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/TabelaDeAlunosPorTurma.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/TabelaDeAlunosPorTurma.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/inscricao/TurmaComboBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/inscricao/TurmaComboBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/hooks/useApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/hooks/useApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/CadastroDeAlunosPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/CadastroDeAlunosPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/CadastroDeUsuarioPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/CadastroDeUsuarioPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/DetalhesTurmaPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/DetalhesTurmaPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/GerenciarGruposPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/GerenciarGruposPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/InscricaoDeAlunoPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/InscricaoDeAlunoPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/ListarTurmasPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/ListarTurmasPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/PesquisaTurmasPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/PesquisaTurmasPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/auth/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restapi/auth/config/SetupDataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/auth/config/SetupDataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/Controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/Controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/controller/UsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/Filter/JwtAuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/config/SetupDataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/config/SetupDataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/model/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/repository/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/repository/UsuarioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/service/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/service/UsuarioDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/service/UsuarioDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/util/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/bruno/restapi/auth/util/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/util/TokenResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/auth/util/UsuarioLogin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +32,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -62,6 +64,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\bruno\Desktop\UFF\DevWeb\Projeto_DevWeb\Projeto_Desenvolvimento_Web\restapi\src\main\java\com\bruno\restapi" />
       <recent name="C:\Users\bruno\Desktop\UFF\DevWeb\Projeto_DevWeb\Projeto_Desenvolvimento_Web\restapi\auth\Controller" />
     </key>
   </component>

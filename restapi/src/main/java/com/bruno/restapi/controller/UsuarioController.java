@@ -1,4 +1,4 @@
-package com.bruno.restapi.auth.controller;
+package com.bruno.restapi.controller;
 
 import com.bruno.restapi.auth.model.Usuario;
 import com.bruno.restapi.auth.service.UsuarioService;
