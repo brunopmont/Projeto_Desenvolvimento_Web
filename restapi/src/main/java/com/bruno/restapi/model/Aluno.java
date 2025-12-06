@@ -2,6 +2,9 @@ package com.bruno.restapi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "aluno")
@@ -19,10 +22,14 @@ public class Aluno {
     @Column(nullable = false)
     private String nome;
 
+    @NotBlank(message = "O email deve ser informado.")
+    @Email(message = "Email inválido.")
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "O CPF deve ser informado.")
+    @CPF(message = "CPF inválido")
+    @Column(unique = true)
     private String cpf;
 
     // Construtor sem o ID
