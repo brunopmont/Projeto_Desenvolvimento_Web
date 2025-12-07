@@ -43,12 +43,14 @@ public class AlunoService {
     public void delete(Long id) {
         Aluno aluno = findById(id);
 
-        // --- Validação: Impede exclusão se o aluno tiver inscrições ---
+        // REMOVA ou COMENTE este bloco de validação manual.
+        // Deixe o repositório tentar deletar. Se houver inscrições,
+        // o DB lançará DataIntegrityViolationException, que seu Handler já trata como 409.
+        /*
         if (!inscricaoRepository.findByAluno(aluno).isEmpty()) {
-            // Esta mensagem será enviada ao front-end se o seu ExceptionHandler tratar RuntimeException
             throw new RuntimeException("Não é possível remover o aluno pois ele possui inscrições ativas.");
         }
-        // -------------------------------------------------------------
+        */
 
         alunoRepository.delete(aluno);
     }
