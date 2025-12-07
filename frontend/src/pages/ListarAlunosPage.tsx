@@ -1,14 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom"; // <--- Importante para o botão funcionar
+import { Link } from "react-router-dom";
 import useApi from "../hooks/useApi";
 import type { Aluno } from "../model/types";
-import useTokenStore from "../store/TokenStore"; // Para verificar permissão (opcional visualmente)
+import useTokenStore from "../store/TokenStore";
 
 const ListarAlunosPage = () => {
   const { recuperar, remover } = useApi<Aluno>("/alunos");
   const queryClient = useQueryClient();
   
-  // Verifica se é admin para mostrar o botão de Novo Aluno (Melhoria de UX)
   const role = useTokenStore(s => s.tokenResponse.role);
   const isAdmin = role === 'ADMIN';
 
@@ -21,19 +20,32 @@ const ListarAlunosPage = () => {
     mutationFn: (id: number) => remover(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["alunos"] });
-      alert("Aluno removido!");
+      alert("Aluno removido com sucesso!");
     },
-    onError: (error) => console.log("Erro na mutação:", error),
+    onError: (error: any) => {
+      console.error("Erro na remoção:", error);
+      // Se for erro 409 (Conflito), mostra o aviso e NÃO sai da tela
+      if (error.response && error.response.status === 409) {
+          alert("Não é possível remover: O aluno possui associações (está em turmas).");
+      } 
+      // Se for ADMIN e tomou 403 (proibido), avisa e NÃO sai da tela
+      else if (error.response && error.response.status === 403) {
+           alert("Operação não permitida.");
+      }
+      // Se for outro erro, apenas avisa
+      else {
+          alert("Erro ao tentar remover.");
+      }
+    },
   });
 
-  if (isLoading) return <div>Carregando...</div>;
-  if (isError) return <div>Erro ao carregar (Verifique se está logado).</div>;
+  if (isLoading) return <div className="container mt-3">Carregando...</div>;
+  if (isError) return <div className="container mt-3">Erro ao carregar dados.</div>;
 
   return (
-    <div>
+    <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3>Lista de Alunos</h3>
-        {/* Botão para cadastrar novo aluno */}
         {isAdmin && (
             <Link to="/cadastro-aluno" className="btn btn-primary">
               Novo Aluno
@@ -58,14 +70,17 @@ const ListarAlunosPage = () => {
               <td>{aluno.email}</td>
               <td>
                 <button
+                  type="button" // <--- IMPORTANTE: Evita submit automático
                   className="btn btn-danger btn-sm"
-                  onClick={() => {
-                    if (confirm("Tem certeza?")) {
+                  onClick={(e) => {
+                    e.preventDefault(); // <--- IMPORTANTE: Evita recarregar a página
+                    if (window.confirm(`Tem certeza que deseja remover o aluno ${aluno.nome}?`)) {
                       mutationRemover.mutate(aluno.id);
                     }
                   }}
+                  disabled={mutationRemover.isPending}
                 >
-                  Remover
+                  {mutationRemover.isPending ? "..." : "Remover"}
                 </button>
               </td>
             </tr>
